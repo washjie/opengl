@@ -4,6 +4,8 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
+void processInput(GLFWwindow * window);
+
 int main()
 {
 	/*glfw initialization*/
@@ -28,7 +30,7 @@ int main()
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
-	}
+	}																																																																																																																																																																																																																																																																																											
 
 	/*
 	tell opengl the size of the rendering window, so that opengl knows how 
@@ -45,6 +47,20 @@ int main()
 	/*our rendering loop*/
 	while(!glfwWindowShouldClose(window))
 	{
+		/*
+		handle user input
+		*/
+		processInput(window);
+
+		/*
+		rendering commands
+		*/
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		/*
+		check all events and swap the buffers
+		*/
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
@@ -57,4 +73,12 @@ int main()
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
+}
+
+void processInput(GLFWwindow * window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(window, true);
+	}
 }
